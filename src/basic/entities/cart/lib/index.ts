@@ -1,4 +1,5 @@
-import { CartItem, Coupon } from "../../../shared/model/types";
+import { CartItem } from "../../../entities/cart/model/types";
+import { Coupon } from "../../../entities/coupon/model/types";
 
 /**
  * 장바구니 아이템에 적용 가능한 최대 할인율을 계산합니다.
