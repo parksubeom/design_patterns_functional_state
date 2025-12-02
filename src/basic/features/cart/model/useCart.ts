@@ -2,24 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 import { CartItem, ProductWithUI, Coupon } from "../../../shared/model/types";
 import { getRemainingStock } from "../../../entities/product/lib";
 import { calculateCartTotal } from "../../../entities/cart/lib";
+import { useLocalStorage } from "../../../shared/lib/useLocalStorage";
 
 export const useCart = (
   products: ProductWithUI[],
   addNotification: (msg: string, type?: "error" | "success" | "warning") => void
 ) => {
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    const saved = localStorage.getItem("cart");
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
-
-  useEffect(() => {
-    if (cart.length > 0) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    } else {
-      localStorage.removeItem("cart");
-    }
-  }, [cart]);
+    const [cart, setCart] = useLocalStorage<CartItem[]>("cart", []);
+    const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
 
   const addToCart = useCallback(
     (product: ProductWithUI) => {

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Coupon } from "../../../shared/model/types";
+import { useLocalStorage } from "../../../shared/lib/useLocalStorage";
 
 const initialCoupons: Coupon[] = [
   {
@@ -19,21 +20,10 @@ const initialCoupons: Coupon[] = [
 export const useCoupons = (
   addNotification: (msg: string, type?: "error" | "success") => void
 ) => {
-  const [coupons, setCoupons] = useState<Coupon[]>(() => {
-    const saved = localStorage.getItem("coupons");
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return initialCoupons;
-      }
-    }
-    return initialCoupons;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("coupons", JSON.stringify(coupons));
-  }, [coupons]);
+  const [coupons, setCoupons] = useLocalStorage<Coupon[]>(
+    "coupons",
+    initialCoupons
+  );
 
   const addCoupon = useCallback(
     (newCoupon: Coupon) => {

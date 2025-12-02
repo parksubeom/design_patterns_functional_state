@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { ProductWithUI } from "../../../shared/model/types";
+import { useLocalStorage } from "../../../shared/lib/useLocalStorage"
 
 // 초기 데이터 (실제로는 API에서 가져오거나 상수로 관리)
 const initialProducts: ProductWithUI[] = [
@@ -39,21 +40,10 @@ const initialProducts: ProductWithUI[] = [
 export const useProducts = (
   addNotification: (msg: string, type?: "error" | "success") => void
 ) => {
-  const [products, setProducts] = useState<ProductWithUI[]>(() => {
-    const saved = localStorage.getItem("products");
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return initialProducts;
-      }
-    }
-    return initialProducts;
-  });
-
-  useEffect(() => {
-    localStorage.setItem("products", JSON.stringify(products));
-  }, [products]);
+  const [products, setProducts] = useLocalStorage<ProductWithUI[]>(
+    "products",
+    initialProducts
+  );
 
   const addProduct = useCallback(
     (newProduct: Omit<ProductWithUI, "id">) => {
