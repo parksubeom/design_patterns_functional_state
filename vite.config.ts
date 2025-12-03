@@ -5,6 +5,12 @@ import react from '@vitejs/plugin-react-swc';
 export default mergeConfig(
   defineConfig({
     plugins: [react()],
+      build: {
+      rollupOptions: {
+        input: "./index.basic.html",
+      },
+    },
+    base: process.env.VITE_BASE_PATH || "/",
   }),
   defineTestConfig({
     test: {
