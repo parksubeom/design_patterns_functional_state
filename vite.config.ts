@@ -7,7 +7,7 @@ export default mergeConfig(
     plugins: [react()],
       build: {
       rollupOptions: {
-        input: "./index.basic.html",
+        input: "./index.advanced.html",
       },
     },
     base: process.env.VITE_BASE_PATH || "/",
