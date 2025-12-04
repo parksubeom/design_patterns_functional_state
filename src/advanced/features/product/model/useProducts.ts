@@ -21,7 +21,7 @@ export const useProducts = () => {
     (newProduct: Omit<ProductWithUI, "id">) => {
       const product: ProductWithUI = {
         ...newProduct,
-        id: `p${Date.now()}`,
+        id: `p-${crypto.randomUUID()}`,
       };
       setProducts((prev) => [...prev, product]);
       addNotification("상품이 추가되었습니다.", "success");

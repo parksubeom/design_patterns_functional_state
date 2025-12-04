@@ -12,7 +12,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
   notifications: [],
 
   addNotification: (message, type = "success") => {
-    const id = Date.now().toString();
+    const id = crypto.randomUUID();
     
     // 1. 상태 업데이트 (추가)
     set((state) => ({
