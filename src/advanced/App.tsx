@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // Shared Store
-import { useNotificationStore } from "./shared/lib/notificationStore"; // ✅ 추가
+import { useNotificationStore } from "./shared/lib/notificationStore";
 
 // Shared UI & Lib
 import { NotificationSystem } from "./shared/ui/NotificationSystem";
@@ -24,10 +24,10 @@ const App = () => {
     useNotificationStore.setState({ notifications: [] });
   }, []);
 
-  const { products, addProduct, updateProduct, deleteProduct } = useProducts(addNotification);
-  const { coupons, addCoupon, deleteCoupon } = useCoupons(addNotification);
+  const { products, addProduct, updateProduct, deleteProduct } = useProducts();
+  const { coupons, addCoupon, deleteCoupon } = useCoupons();
 
-  // ✅ useCart는 이제 인자 없이(상품 목록만) 호출
+  //useCart는 이제 인자 없이(상품 목록만) 호출
   const {
     cart,
     selectedCoupon,
@@ -72,7 +72,7 @@ const App = () => {
             onDeleteProduct={deleteProduct}
             onAddCoupon={addCoupon}
             onDeleteCoupon={deleteCoupon}
-            onNotification={addNotification} // ✅ Store의 함수 전달
+            onNotification={addNotification}
           />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">

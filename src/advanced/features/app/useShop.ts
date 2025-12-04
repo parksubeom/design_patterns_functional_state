@@ -8,8 +8,8 @@ export const useShop = () => {
   const { notifications, addNotification, removeNotification } = useNotificationSystem();
 
   // 2. 도메인 훅 연결 (의존성 주입 해결)
-  const productLogic = useProducts(addNotification);
-  const couponLogic = useCoupons(addNotification);
+  const productLogic = useProducts();
+  const couponLogic = useCoupons();
   const cartLogic = useCart(productLogic.products);
 
   return {

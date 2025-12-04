@@ -1,5 +1,8 @@
 import { useState, FormEvent } from "react";
 
+// Shared Store
+import { useNotificationStore } from "../../../shared/lib/notificationStore";
+
 // Entities (Model)
 import { Coupon } from "../../../entities/coupon/model/types";
 
@@ -8,8 +11,6 @@ interface Props {
   onAddCoupon: (coupon: Coupon) => void;
   /** 취소 버튼 클릭 시 호출되는 콜백 */
   onCancel: () => void;
-  /** 유효성 검사 실패 등의 알림을 띄우기 위한 콜백 (Dependency Injection) */
-  onNotification: (message: string, type?: "error" | "success" | "warning") => void;
 }
 
 /**
@@ -19,8 +20,9 @@ interface Props {
 export const CouponManagementForm = ({
   onAddCoupon,
   onCancel,
-  onNotification,
 }: Props) => {
+  const addNotification = useNotificationStore((state) => state.addNotification);
+
   // --------------------------------------------------------------------------
   // Local State
   // --------------------------------------------------------------------------
@@ -59,7 +61,7 @@ export const CouponManagementForm = ({
 
     if (couponForm.discountType === "percentage") {
       if (value > 100) {
-        onNotification("할인율은 100%를 초과할 수 없습니다", "error");
+        addNotification("할인율은 100%를 초과할 수 없습니다", "error");
         setCouponForm((prev) => ({ ...prev, discountValue: 100 }));
       } else if (value < 0) {
         setCouponForm((prev) => ({ ...prev, discountValue: 0 }));
@@ -67,7 +69,7 @@ export const CouponManagementForm = ({
     } else {
       // 정액 할인일 경우
       if (value > 100000) {
-        onNotification("할인 금액은 100,000원을 초과할 수 없습니다", "error");
+        addNotification("할인 금액은 100,000원을 초과할 수 없습니다", "error");
         setCouponForm((prev) => ({ ...prev, discountValue: 100000 }));
       } else if (value < 0) {
         setCouponForm((prev) => ({ ...prev, discountValue: 0 }));

@@ -2,6 +2,7 @@ import { FormEvent } from "react";
 
 // Shared
 import { ProductWithUI } from "../../../../entities/product/model/types";
+import { useNotificationStore } from "../../../../shared/lib/notificationStore";
 
 // Features (Model)
 import { useProductForm } from "../useProductForm";
@@ -10,7 +11,6 @@ interface Props {
   initialData?: ProductWithUI | null;
   onSubmit: (product: ProductWithUI) => void;
   onCancel: () => void;
-  onNotification: (message: string, type?: "error" | "success" | "warning") => void;
 }
 
 /**
@@ -20,8 +20,9 @@ export const ProductManagementForm = ({
   initialData,
   onSubmit,
   onCancel,
-  onNotification,
 }: Props) => {
+
+  const addNotification = useNotificationStore((state) => state.addNotification);
   // Logic을 Hook으로 위임
   const {
     productForm,
@@ -31,7 +32,7 @@ export const ProductManagementForm = ({
     addDiscount,
     removeDiscount,
     updateDiscount,
-  } = useProductForm({ initialData, onNotification });
+  } = useProductForm({ initialData, onNotification: addNotification });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
