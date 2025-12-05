@@ -93,6 +93,7 @@ export const CartSidebar = ({
                     <button
                       onClick={() => onRemoveFromCart(item.product.id)}
                       className="text-gray-400 hover:text-red-500 ml-2"
+                      title={`${item.product.name}비우기`}
                     >
                       <svg
                         className="w-4 h-4"
@@ -112,6 +113,7 @@ export const CartSidebar = ({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <button
+                        title={`${item.product.name} 빼기`}
                         onClick={() =>
                           onUpdateQuantity(item.product.id, item.quantity - 1)
                         }
@@ -123,6 +125,7 @@ export const CartSidebar = ({
                         {item.quantity}
                       </span>
                       <button
+                      title={`${item.product.name} 추가하기`}
                         onClick={() =>
                           onUpdateQuantity(item.product.id, item.quantity + 1)
                         }

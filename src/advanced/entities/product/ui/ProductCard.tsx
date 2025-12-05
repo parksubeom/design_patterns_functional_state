@@ -91,6 +91,7 @@ export const ProductCard = ({ product, cart, onAddToCart }: Props) => {
 
         {/* 장바구니 버튼 */}
         <button
+          title={product.name}
           onClick={() => onAddToCart(product)}
           disabled={isSoldOut}
           className={`w-full py-2 px-4 rounded-md font-medium transition-colors ${
